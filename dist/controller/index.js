@@ -8,8 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isAValidLanguageNumber = exports.languages = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const main_1 = require("../main");
 exports.languages = [
     "bn",
     "ta",
@@ -35,8 +41,8 @@ function externalApiReq(source_language, content, target_language) {
         const firstResponse = yield fetch('https://meity-auth.ulcacontrib.org/ulca/apis/v0/model/getModelsPipeline', {
             method: "POST",
             headers: {
-                "userID": "1e4705f1cb3a4e6eafea35b3f98def60",
-                "ulcaApiKey": "073a28eb1e-e4c0-4fb0-8137-58adfeb754cc",
+                "userID": main_1.config.userID,
+                "ulcaApiKey": main_1.config.ulcaApiKey,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -52,7 +58,7 @@ function externalApiReq(source_language, content, target_language) {
                     }
                 ],
                 "pipelineRequestConfig": {
-                    "pipelineId": "64392f96daac500b55c543cd"
+                    "pipelineId": main_1.config.pipelineId,
                 }
             })
         });

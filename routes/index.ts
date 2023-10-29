@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/scaler/translate', async (req: Request, res: Response) => {
     const parsedInput = reqInput.safeParse(req.body);
 
-    if (!parsedInput.success) {
+    if (!parsedInput.success || !isAValidLanguageNumber(parsedInput.data.source_language) || !isAValidLanguageNumber(parsedInput.data.target_language)) {
         return res.status(403).json({
             status_code: 403,
             message: "The req body parameters are invalid"
@@ -19,21 +19,19 @@ router.post('/scaler/translate', async (req: Request, res: Response) => {
     const target_language = parsedInput.data.target_language;
 
     try {
-    const output = await externalApiReq(source_language, content, target_language);
-    
-    return res.status(200).json({
+        const output = await externalApiReq(source_language, content, target_language);
+        return res.status(200).json({
         "status_code": 200,
         "message": "Translation successfull",
         "translated_content": output,
     });
-    
-    } catch (e) {
+  } catch (e) {
+        console.log(e);
         return res.status(500).json({
             "status_code": 500,
             message: "Internal server error",
         });
     }
-
 });
 
 export default router;

@@ -1,3 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+import { config } from "../main";
+
 export const languages: string[] = [
     "bn",
     "ta",
@@ -24,8 +29,8 @@ export default async function externalApiReq(source_language: number, content: s
     const firstResponse = await fetch('https://meity-auth.ulcacontrib.org/ulca/apis/v0/model/getModelsPipeline', {
         method: "POST",
         headers: {
-            "userID": "1e4705f1cb3a4e6eafea35b3f98def60",
-            "ulcaApiKey": "073a28eb1e-e4c0-4fb0-8137-58adfeb754cc",
+            "userID": config.userID,
+            "ulcaApiKey": config.ulcaApiKey,
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -41,7 +46,7 @@ export default async function externalApiReq(source_language: number, content: s
                 }
             ],
             "pipelineRequestConfig": {
-                "pipelineId": "64392f96daac500b55c543cd"
+                "pipelineId": config.pipelineId,
             }
         }) 
     });

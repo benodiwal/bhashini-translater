@@ -59,6 +59,7 @@ router.post('/scaler/translate', (req, res) => __awaiter(void 0, void 0, void 0,
         });
     }
     catch (e) {
+        console.log(e);
         return res.status(500).json({
             "status_code": 500,
             message: "Internal server error",
